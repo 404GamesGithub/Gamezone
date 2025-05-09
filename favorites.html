@@ -1,0 +1,77 @@
+<!-- favorites.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Games | Game Realm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="assets/css/index.css" rel="stylesheet" /> <!-- Link the same CSS -->
+    <style>
+         /* Optional: Add any specific styles for the favorites page here,
+            but most common styles should be in index.css */
+          #noFavoritesMessage {
+              color: #ccc;
+              text-align: center;
+              width: 100%;
+              grid-column: 1 / -1; /* Span across all columns in grid */
+              font-size: 1.2em;
+              margin-top: 30px;
+          }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+          <h1>🎮 Game Realm</h1>
+          <ul>
+            <li><a href="index.html">Home</a></li> <!-- Link back to home -->
+            <li><a href="#">Unblocker (In Development)</a></li>
+            <li><a href="updates.html">Updates</a></li>
+            <li><a href="favorites.html">Favorites Page</a></li> <!-- Link to separate favorites page -->
+            <li><a href="https://discord.gg/ppssWBHMKv">Discord</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="hero fade-in">
+        <h2>Your Favorite Games</h2>
+        <p>Games you've marked with a heart.</p>
+      </section>
+
+      <section class="games">
+        <h3>Favorited Games</h3>
+        <div class="game-grid" id="favoriteGamesGrid">
+            <!-- Favorite game cards will be dynamically generated here by favorites.js -->
+            <p id="noFavoritesMessage" style="display: none;">No favorite games added yet. Go back to the Home page to favorite some!</p>
+        </div>
+      </section>
+
+    <!-- Game Window Overlay (Same as index.html) -->
+    <div class="game-window-overlay" id="gameWindowOverlay">
+         <div class="game-iframe-container">
+             <iframe id="gameIframe" src="" frameborder="0"></iframe>
+         </div>
+         <div class="game-window-controls">
+             <span id="gameTitle">Game Title</span>
+             <div>
+                 <button id="fullscreenBtn" title="Fullscreen"><i class="material-symbols-outlined">fullscreen</i></button>
+                 <button id="newTabBtn" title="Open in New Tab"><i class="material-symbols-outlined">open_in_new</i></button>
+                 <button id="closeBtn" title="Close"><i class="material-symbols-outlined">close</i></button>
+             </div>
+         </div>
+     </div>
+     <!-- End Game Window Overlay -->
+
+
+      <footer>
+        <p>© 2025 GameZone. All rights reserved.</p>  <br>1.01-b
+      </footer>
+
+    <!-- Link game data -->
+    <script src="assets/js/gamesData.js"></script>
+    <!-- Link the specific JavaScript for the favorites page -->
+    <script src="assets/js/favorites.js"></script>
+</body>
+</html>

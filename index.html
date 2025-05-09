@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game realm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Link your main CSS file -->
+    <link href="assets/css/index.css" rel="stylesheet" />
+     <style>
+        /* IMPORTANT: Move the CSS below this line into your assets/css/index.css file */
+        /* This style block is just for demonstration purposes in this answer */
+
+        body {
+            font-family: sans-serif; /* Example font */
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background */
+            color: #eee; /* Light text */
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        header {
+            background-color: #1a1a1a;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #4CAF50; /* Green accent */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: #eee;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #4CAF50;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('Imgs/hero-bg.jpg') no-repeat center center/cover; /* Example background image */
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+            animation: fadeIn 1s ease-out forwards; /* Apply fade-in */
+        }
+
+        .hero h2 {
+            margin-top: 0;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .games {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .games h3 {
+            font-size: 1.8em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Space between cards */
+        }
+
+        /* Style for the new game card structure */
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #444;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add smooth transition */
+            position: relative;
+            padding-bottom: 10px;
+            opacity: 0; /* For slide-in animation */
+            transform: translateY(20px); /* For slide-in animation */
+            animation: slideIn 0.5s ease-out forwards; /* Initial animation */
+            /* animation-delay will be set in JS for stagger */
+        }
+
+        .game-card:hover {
+           transform: translateY(-5px); /* Lift effect */
+           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card .imgg {
+            width: 100%;
+            height: 150px; /* Fixed height for consistency */
+            object-fit: cover; /* Cover the area without distortion */
+            border-bottom: 1px solid #444;
+        }
+
+        .game-card h4 {
+            margin: 10px 5px;
+            color: #fff;
+            font-size: 1.1em;
+            flex-grow: 1; /* Allows title to take space */
+            word-break: break-word; /* Prevent long names from overflowing */
+        }
+
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+            flex-grow: 1; /* Make info section fill available space */
+        }
+
+        .game-actions {
+            display: flex;
+            justify-content: space-around; /* Space out buttons */
+            align-items: center;
+            padding: 5px 0;
+            margin-top: auto; /* Push actions to the bottom */
+        }
+
+        .game-card .play-button {
+           background-color: #4CAF50;
+           color: white;
+           border: none;
+           border-radius: 5px;
+           padding: 8px 15px;
+           cursor: pointer;
+           font-size: 1em;
+           transition: background-color 0.3s ease;
+           flex-grow: 1; /* Allow button to grow */
+           margin-right: 5px; /* Space between play and favorite */
+        }
+
+        .game-card .play-button:hover {
+            background-color: #45a049;
+        }
+
+        .game-card .favorite-button {
+            position: absolute; /* Position over the image */
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Make it round */
+            width: 30px; /* Set a fixed size */
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: color 0.3s ease, background-color 0.3s ease; /* Smooth color/bg change */
+            z-index: 5; /* Make sure it's above the image */
+        }
+
+        .game-card .favorite-button:hover {
+             background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+        }
+
+         .game-card .favorite-button .heart-icon {
+             color: #aaa; /* Default heart color */
+             transition: color 0.3s ease; /* Smooth heart color change */
+         }
+
+         .game-card .favorite-button .heart-icon.favorited {
+             color: red; /* Red when favorited */
+         }
+
+         /* Adjust main content visibility when overlay is active */
+         body.game-active {
+             overflow: hidden; /* Prevent scrolling the main page when game is open */
+         }
+
+         /* Animations */
+         @keyframes fadeIn {
+             from { opacity: 0; }
+             to { opacity: 1; }
+         }
+
+         @keyframes slideIn {
+              from { opacity: 0; transform: translateY(20px); }
+              to { opacity: 1; transform: translateY(0); }
+         }
+
+         /* Game Window Overlay */
+        .game-window-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none; /* Controlled by JS class 'active' now */
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content to top */
+            padding: 10px;
+            box-sizing: border-box;
+
+            /* Add transition for modal appearance */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .game-window-overlay.active {
+            opacity: 1;
+            visibility: visible;
+             display: flex; /* Make it visible when active */
+        }
+
+        .game-window-controls {
+             /* Position at the bottom */
+             margin-top: auto; /* Pushes the controls to the bottom */
+             width: 100%;
+             max-width: 1200px;
+             height: 50px; /* Slightly taller controls at the bottom */
+             background-color: #222;
+             color: white;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 0 15px;
+             box-sizing: border-box;
+             border-bottom-left-radius: 8px; /* Rounded corners at the bottom */
+             border-bottom-right-radius: 8px;
+             flex-shrink: 0;
+        }
+
+        .game-window-controls span {
+            flex-grow: 1;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0 10px;
+        }
+
+        .game-window-controls button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.4em; /* Slightly larger icons */
+            cursor: pointer;
+            margin-left: 10px;
+            transition: color 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+         .game-window-controls button:hover {
+            color: #4CAF50;
+         }
+
+
+        .game-iframe-container {
+            width: 100%;
+            flex-grow: 1; /* Allows iframe container to take remaining space */
+            display: flex;
+            justify-content: center; /* Center iframe horizontally */
+            align-items: center; /* Center iframe vertically */
+            background-color: #000;
+            border-top-left-radius: 8px; /* Rounded corners at the top */
+            border-top-right-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px; /* Space between iframe and controls */
+        }
+
+        .game-window-overlay iframe {
+            display: block;
+             /* Adjust width and height to maintain aspect ratio but not necessarily fill */
+             /* Example: Max width 80% of container, Max height 90% of container */
+             max-width: 95%; /* Adjust percentage as needed */
+             max-height: 95%; /* Adjust percentage as needed */
+             width: 100%; /* Default to 100% but constrained by max-width */
+             height: 100%; /* Default to 100% but constrained by max-height */
+            border: none;
+            /* Combine max-width/height with object-fit or aspect-ratio if needed for strict aspect control */
+            /* object-fit: contain; */ /* Can help maintain aspect ratio within container */
+             /* aspect-ratio: 16 / 9; */ /* Set a specific aspect ratio if all games use the same */
+        }
+
+        /* Specific style for the Favorites section grid */
+        #favoriteGamesGrid {
+            /* Adjust grid columns for the favorites section if desired, e.g., fewer columns */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Slightly wider cards for favorites? */
+            margin-bottom: 40px; /* Space between favorites and all games */
+        }
+
+         #noFavoritesMessage {
+            color: #ccc;
+            text-align: center;
+            width: 100%;
+            grid-column: 1 / -1; /* Span across all columns in grid */
+            font-size: 1.2em;
+            margin-top: 10px;
+         }
+
+         footer {
+              text-align: center;
+              padding: 20px;
+              background-color: #1a1a1a;
+              color: #888;
+              font-size: 0.9em;
+         }
+
+
+        /* END IMPORTANT */
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+          <h1>🎮 Game Realm</h1>
+          <ul>
+            <li><a href="index.html">Home</a></li> <!-- Link back to home -->
+            <li><a href="#">Unblocker (In Development)</a></li>
+            <li><a href="updates.html">Updates</a></li>
+            <li><a href="https://discord.gg/ppssWBHMKv">Discord</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="hero fade-in">
+        <h2>Welcome to GameZone!</h2>
+        <p>Your hub for the latest games and updates.</p>
+      </section>
+
+      <section class="games">
+        <h3>Your Favorites</h3>
+        <div class="game-grid" id="favoriteGamesGrid">
+            <!-- Favorite game cards will be dynamically generated here -->
+             <p id="noFavoritesMessage" style="display: none;">No favorite games added yet. Click the heart icon on a game to add it here!</p>
+        </div>
+
+        <h3>All Games</h3>
+        <div class="game-grid" id="allGamesGrid">
+            <!-- All game cards (non-favorites) will be dynamically generated here -->
+        </div>
+      </section>
+
+    <!-- Game Window Overlay -->
+    <div class="game-window-overlay" id="gameWindowOverlay">
+         <div class="game-iframe-container">
+             <iframe id="gameIframe" src="" frameborder="0"></iframe>
+         </div>
+         <div class="game-window-controls">
+             <span id="gameTitle">Game Title</span>
+             <div>
+                 <button id="fullscreenBtn" title="Fullscreen"><i class="material-symbols-outlined">fullscreen</i></button>
+                 <button id="newTabBtn" title="Open in New Tab"><i class="material-symbols-outlined">open_in_new</i></button>
+                 <button id="closeBtn" title="Close"><i class="material-symbols-outlined">close</i></button>
+             </div>
+         </div>
+     </div>
+     <!-- End Game Window Overlay -->
+
+
+      <footer>
+        <p>© 2025 GameZone. All rights reserved.</p>  <br>1.01-b
+      </footer>
+
+    <!-- Link game data -->
+    <script src="assets/js/gamesData.js"></script>
+    <!-- Link your main JavaScript file -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
